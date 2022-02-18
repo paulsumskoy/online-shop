@@ -8,8 +8,8 @@ class UserController {
     }
 
     async check(req, res) {
-        const query = req.query
-        res.json(query)
+        const id = req.query
+        res.json(id)
     }
 }
 
