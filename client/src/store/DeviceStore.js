@@ -11,7 +11,7 @@ export default class DeviceStore {
             {id: 2, name: 'iphone'}
         ]
         this._devices = [
-            {id: 1, name: '2 surep', price: 10000, rating: 5,}
+            {id: 1, name: '2 super', price: 10000, rating: 5}
         ]
         makeAutoObservable(this)
     }
