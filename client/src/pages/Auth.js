@@ -4,7 +4,7 @@ import {NavLink, useLocation} from "react-router-dom";
 import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
 
 const Auth = () => {
-    const  location = useLocation()
+    const location = useLocation()
     const isLogin = location.pathname === LOGIN_ROUTE
     //console.log(location)
 
