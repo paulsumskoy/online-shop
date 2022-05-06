@@ -1,22 +1,33 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Card, Container, Form, Row} from "react-bootstrap";
-import {NavLink, useLocation} from "react-router-dom";
-import {LOGIN_ROUTE, REGISTRATION_ROUTE} from "../utils/consts";
-import {login, registration} from "../http/userApi";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts";
+import {login, registration} from "../http/userAPI";
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const Auth = () => {
+const Auth = observer(() => {
+    const {user} = useContext(Context)
     const location = useLocation()
+    const navigate = useNavigate()
     const isLogin = location.pathname === LOGIN_ROUTE
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     //console.log(location)
 
     const click = async () => {
-        if (isLogin) {
-            const response = await login();
-        } else {
-            const response = await registration(email, password);
-            console.log(response)
+        try {
+            let data;
+            if (isLogin) {
+                data = await login(email, password);
+            } else {
+                data = await registration(email, password);
+            }
+            user.setUser(user)
+            user.setIsAuth(true)
+            navigate(SHOP_ROUTE)
+        } catch (e) {
+            alert(e.response.data.message)
         }
     }
 
@@ -42,12 +53,6 @@ const Auth = () => {
                         type="password"
                     />
                     <Row className="d-flex justify-content-between mt-3 px-md-5">
-                        <Button
-                            variant={"outline-success"}
-                            onClick={click}
-                        >
-                            {isLogin ? 'Log In' : 'Registration'}
-                        </Button>
                         {isLogin ?
                             <div className="mt-3">
                                 No account? <NavLink to={REGISTRATION_ROUTE}>Registration</NavLink>
@@ -57,11 +62,18 @@ const Auth = () => {
                                 Have account? <NavLink to={LOGIN_ROUTE}>Log In</NavLink>
                             </div>
                         }
+                        <Button
+                            variant={"outline-success"}
+                            onClick={click}
+                            className="mt-3"
+                        >
+                            {isLogin ? 'Log In' : 'Registration'}
+                        </Button>
                     </Row>
                 </Form>
             </Card>
         </Container>
     );
-};
+});
 
 export default Auth;
