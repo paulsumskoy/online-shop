@@ -6,7 +6,7 @@ export default class DeviceStore {
         this._brands = []
         this._devices = []
         this._selectedType = {}
-        this._selectedBrand ={}
+        this._selectedBrand = {}
         makeAutoObservable(this)
     }
 
