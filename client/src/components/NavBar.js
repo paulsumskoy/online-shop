@@ -8,6 +8,12 @@ import {NavLink, useNavigate} from "react-router-dom";
 const NavBar = observer(() => {
     const {user} = useContext(Context)
     const navigate = useNavigate()
+
+    const logOut = () => {
+        user.setUser({})
+        user.setIsAuth(false)
+    }
+
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
@@ -22,7 +28,7 @@ const NavBar = observer(() => {
                         </Button>
                         <Button
                             variant={"outline-light"}
-                            onClick={() => navigate(LOGIN_ROUTE, {replace: true})}
+                            onClick={() => logOut()}
                             className="mx-lg-2"
                         >
                             Log Out
@@ -30,7 +36,7 @@ const NavBar = observer(() => {
                     </Nav>
                     :
                     <Nav className="ml-auto" style={{color: "darkgrey"}}>
-                        <Button variant={"outline-light"} onClick={() => user.setIsAuth(true)}>Log In</Button>
+                        <Button variant={"outline-light"} onClick={() => navigate(LOGIN_ROUTE, {replace: true})}>Log In</Button>
                     </Nav>
                 }
             </Container>
