@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Context} from "../index";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
-import {ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
+import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import {NavLink, useNavigate} from "react-router-dom";
 
@@ -12,6 +12,7 @@ const NavBar = observer(() => {
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        user.setIsAdmin(false)
         localStorage.removeItem('token')
     }
 
@@ -21,11 +22,22 @@ const NavBar = observer(() => {
                 <NavLink style={{color:'darkgrey'}} to={SHOP_ROUTE}>Online Shop</NavLink>
                 {user.isAuth ?
                     <Nav className="ml-auto" style={{color: "darkgrey"}}>
+                        {user.isAdmin ?
+                            <Button
+                                className="mx-lg-2"
+                                variant={"outline-light"}
+                                onClick={() => navigate(ADMIN_ROUTE, {replace: true})}
+                            >
+                                Admin panel
+                            </Button>
+                            :
+                            <div></div>
+                        }
                         <Button
                             variant={"outline-light"}
-                            onClick={() => navigate(ADMIN_ROUTE, {replace: true})}
+                            onClick={() => navigate(BASKET_ROUTE, {replace: true})}
                         >
-                            Admin panel
+                            Basket
                         </Button>
                         <Button
                             variant={"outline-light"}

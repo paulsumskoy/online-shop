@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
-import bigStar from '../assets/bigStar.png'
+import bigStar from '../assets/bigStar.png';
 import {useParams} from "react-router-dom";
-import {fetchOneDevice} from "../http/deviceAPI";
+import {addToBasket, fetchOneDevice} from "../http/deviceAPI";
 
 const DevicePage = () => {
     const [device, setDevice] = useState({info: []})
@@ -11,6 +11,12 @@ const DevicePage = () => {
     useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
     }, [])
+
+    const add = () => {
+        const formData = new FormData()
+        formData.append('deviceId', id)
+        addToBasket(formData).then(response => alert(`Item ` + device.name + ` was added to your list!`))
+    }
 
     return (
         <Container className="mt-3">
@@ -35,7 +41,7 @@ const DevicePage = () => {
                         style={{width: 300, height: 300, fontSize: 32, border: '5px solid lightgray'}}
                     >
                         <h3>From {device.price} USD</h3>
-                        <Button variant={"outline-dark"}>Add to list</Button>
+                        <Button variant={"outline-dark"} onClick={add}>Add to list</Button>
                     </Card>
                 </Col>
             </Row>

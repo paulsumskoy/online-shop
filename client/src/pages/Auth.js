@@ -17,12 +17,16 @@ const Auth = observer(() => {
 
     const click = async () => {
         try {
+            let data;
             if (isLogin) {
-                await login(email, password);
+                data = await login(email, password);
             } else {
-                await registration(email, password);
+                data = await registration(email, password);
             }
-            user.setUser(user)
+            if (email === "admin@gmail.com") {
+                user.setIsAdmin(true)
+            }
+            user.setUser(data)
             user.setIsAuth(true)
             navigate(SHOP_ROUTE)
         } catch (e) {

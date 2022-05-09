@@ -20,14 +20,14 @@ const CreateBrand = ({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Add new type
+                    Add new brand
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form.Control
                     value={value}
                     onChange={e => setValue(e.target.value)}
-                    placeholder={"Enter type name"}
+                    placeholder={"Enter brand name"}
                 />
             </Modal.Body>
             <Modal.Footer>
